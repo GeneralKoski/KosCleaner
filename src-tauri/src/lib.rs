@@ -1,19 +1,40 @@
+pub mod audit;
 pub mod cleaners;
+pub mod executor;
 pub mod platform;
 pub mod safety;
 pub mod scanner;
 
+use std::path::PathBuf;
+
 use cleaners::Cleaner;
+use executor::{ExecutionReport, ExecutionRequest};
 use scanner::ScanReport;
+
+fn cleaner_by_id(id: &str) -> Result<Box<dyn Cleaner>, String> {
+    match id {
+        "system.temp" => Ok(Box::new(cleaners::system::SystemTempCleaner)),
+        other => Err(format!("unknown cleaner: {other}")),
+    }
+}
 
 #[tauri::command]
 fn scan_cleaner(id: String) -> Result<ScanReport, String> {
     let paths = platform::current();
-    let cleaner: Box<dyn Cleaner> = match id.as_str() {
-        "system.temp" => Box::new(cleaners::system::SystemTempCleaner),
-        other => return Err(format!("unknown cleaner: {other}")),
-    };
+    let cleaner = cleaner_by_id(&id)?;
     Ok(scanner::scan(cleaner.as_ref(), &paths))
+}
+
+#[tauri::command]
+fn execute_cleaner(id: String, paths: Vec<PathBuf>) -> Result<ExecutionReport, String> {
+    let platform_paths = platform::current();
+    let cleaner = cleaner_by_id(&id)?;
+    let request = ExecutionRequest { paths };
+    Ok(executor::execute(
+        cleaner.as_ref(),
+        &platform_paths,
+        &request,
+    ))
 }
 
 #[tauri::command]
@@ -51,7 +72,11 @@ pub fn run() {
             }
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![scan_cleaner, list_cleaners])
+        .invoke_handler(tauri::generate_handler![
+            scan_cleaner,
+            execute_cleaner,
+            list_cleaners
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

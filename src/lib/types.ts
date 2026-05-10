@@ -31,3 +31,17 @@ export type CategoryGroup = {
 	enabled: boolean;
 	cleaners: CleanerInfo[];
 };
+
+export type ExecutionFailure = {
+	path: string;
+	message: string;
+};
+
+export type ExecutionReport = {
+	cleaner_id: string;
+	attempted: number;
+	deleted: number;
+	freed_bytes: number;
+	failures: ExecutionFailure[];
+	audit_log_path: string | null;
+};
