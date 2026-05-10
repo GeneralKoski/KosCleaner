@@ -14,8 +14,16 @@ use scanner::ScanReport;
 fn cleaner_by_id(id: &str) -> Result<Box<dyn Cleaner>, String> {
     match id {
         "system.temp" => Ok(Box::new(cleaners::system::SystemTempCleaner)),
+        "browsers.firefox.cache" => Ok(Box::new(cleaners::browser::FirefoxCacheCleaner)),
         other => Err(format!("unknown cleaner: {other}")),
     }
+}
+
+fn all_cleaners() -> Vec<Box<dyn Cleaner>> {
+    vec![
+        Box::new(cleaners::system::SystemTempCleaner),
+        Box::new(cleaners::browser::FirefoxCacheCleaner),
+    ]
 }
 
 #[tauri::command]
@@ -39,8 +47,7 @@ fn execute_cleaner(id: String, paths: Vec<PathBuf>) -> Result<ExecutionReport, S
 
 #[tauri::command]
 fn list_cleaners() -> Vec<CleanerInfo> {
-    let cleaners: Vec<Box<dyn Cleaner>> = vec![Box::new(cleaners::system::SystemTempCleaner)];
-    cleaners
+    all_cleaners()
         .iter()
         .map(|c| CleanerInfo {
             id: c.id().to_string(),
