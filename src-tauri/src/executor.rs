@@ -222,7 +222,11 @@ mod tests {
         assert_eq!(report.freed_bytes, 350);
         assert!(report.failures.is_empty(), "{:?}", report.failures);
         assert!(!f1.exists() && !f2.exists());
-        assert!(report.audit_log_path.as_ref().map(|p| p.exists()).unwrap_or(false));
+        assert!(report
+            .audit_log_path
+            .as_ref()
+            .map(|p| p.exists())
+            .unwrap_or(false));
 
         let log_contents = fs::read_to_string(report.audit_log_path.unwrap()).unwrap();
         assert!(log_contents.contains("\"cleaner_id\":\"test.fake\""));
@@ -256,7 +260,10 @@ mod tests {
         assert_eq!(report.deleted, 0);
         assert_eq!(report.failures.len(), 1);
         assert!(report.failures[0].message.contains("not within"));
-        assert!(stranger.exists(), "stranger file must NOT have been deleted");
+        assert!(
+            stranger.exists(),
+            "stranger file must NOT have been deleted"
+        );
 
         fs::remove_dir_all(&root).ok();
         fs::remove_dir_all(&other).ok();

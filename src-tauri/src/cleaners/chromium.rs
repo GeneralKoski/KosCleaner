@@ -234,7 +234,10 @@ mod tests {
         if let Some(parent) = p.parent() {
             fs::create_dir_all(parent).unwrap();
         }
-        File::create(p).unwrap().write_all(&vec![0u8; bytes]).unwrap();
+        File::create(p)
+            .unwrap()
+            .write_all(&vec![0u8; bytes])
+            .unwrap();
     }
 
     #[test]
@@ -254,13 +257,10 @@ mod tests {
         let (cache, data) = fresh("chrome-mac");
         let chrome_cache_root = cache.join("Google/Chrome");
         touch(&chrome_cache_root.join("Default/Cache/data_0"), 1000);
-        touch(
-            &chrome_cache_root.join("Default/Code Cache/js/index"),
-            500,
-        );
+        touch(&chrome_cache_root.join("Default/Code Cache/js/index"), 500);
         touch(&chrome_cache_root.join("Profile 1/Cache/data_0"), 200);
         touch(&chrome_cache_root.join("RandomFile.txt"), 10); // non profilo
-        // un service worker dentro user_data_dir
+                                                              // un service worker dentro user_data_dir
         let chrome_data_root = data.join("Google/Chrome");
         touch(
             &chrome_data_root.join("Default/Service Worker/CacheStorage/x"),

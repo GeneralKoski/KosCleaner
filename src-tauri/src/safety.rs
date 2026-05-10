@@ -110,13 +110,12 @@ pub fn ensure_within_root(path: &Path, root: &Path) -> Result<(), SafetyError> {
 // lessicale del prefisso esistente + componenti residui.
 fn resolve_or_normalize(path: &Path) -> Result<PathBuf, SafetyError> {
     if path.exists() {
-        return path
-            .canonicalize()
-            .map(strip_unc_prefix)
-            .map_err(|e| SafetyError::CanonicalizeFailed {
+        return path.canonicalize().map(strip_unc_prefix).map_err(|e| {
+            SafetyError::CanonicalizeFailed {
                 path: path.to_path_buf(),
                 source: e.to_string(),
-            });
+            }
+        });
     }
 
     let mut existing = path.to_path_buf();
@@ -134,13 +133,12 @@ fn resolve_or_normalize(path: &Path) -> Result<PathBuf, SafetyError> {
     let base = if existing.as_os_str().is_empty() {
         path.to_path_buf()
     } else {
-        existing
-            .canonicalize()
-            .map(strip_unc_prefix)
-            .map_err(|e| SafetyError::CanonicalizeFailed {
+        existing.canonicalize().map(strip_unc_prefix).map_err(|e| {
+            SafetyError::CanonicalizeFailed {
                 path: existing.clone(),
                 source: e.to_string(),
-            })?
+            }
+        })?
     };
 
     let mut out = base;
@@ -173,9 +171,29 @@ fn home_dir() -> Option<PathBuf> {
 #[cfg(target_os = "linux")]
 fn critical_paths() -> Vec<PathBuf> {
     [
-        "/", "/bin", "/boot", "/dev", "/etc", "/home", "/lib", "/lib32", "/lib64", "/libx32",
-        "/lost+found", "/media", "/mnt", "/opt", "/proc", "/root", "/run", "/sbin", "/srv",
-        "/sys", "/tmp", "/usr", "/var",
+        "/",
+        "/bin",
+        "/boot",
+        "/dev",
+        "/etc",
+        "/home",
+        "/lib",
+        "/lib32",
+        "/lib64",
+        "/libx32",
+        "/lost+found",
+        "/media",
+        "/mnt",
+        "/opt",
+        "/proc",
+        "/root",
+        "/run",
+        "/sbin",
+        "/srv",
+        "/sys",
+        "/tmp",
+        "/usr",
+        "/var",
     ]
     .iter()
     .map(PathBuf::from)

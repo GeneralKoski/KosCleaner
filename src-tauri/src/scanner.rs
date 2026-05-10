@@ -168,8 +168,8 @@ mod tests {
     }
 
     fn unique_root(label: &str) -> PathBuf {
-        let p = std::env::temp_dir()
-            .join(format!("koscleaner-scan-{}-{}", label, std::process::id()));
+        let p =
+            std::env::temp_dir().join(format!("koscleaner-scan-{}-{}", label, std::process::id()));
         let _ = fs::remove_dir_all(&p);
         fs::create_dir_all(&p).unwrap();
         p
@@ -195,7 +195,11 @@ mod tests {
 
         assert_eq!(report.items.len(), 2);
         assert_eq!(report.total_size, 350);
-        assert!(report.errors.is_empty(), "unexpected errors: {:?}", report.errors);
+        assert!(
+            report.errors.is_empty(),
+            "unexpected errors: {:?}",
+            report.errors
+        );
 
         fs::remove_dir_all(&root).unwrap();
     }
@@ -219,8 +223,8 @@ mod tests {
 
     #[test]
     fn empty_or_missing_root_yields_empty_report() {
-        let root = std::env::temp_dir()
-            .join(format!("koscleaner-scan-missing-{}", std::process::id()));
+        let root =
+            std::env::temp_dir().join(format!("koscleaner-scan-missing-{}", std::process::id()));
         let _ = fs::remove_dir_all(&root);
 
         let paths = FixedPaths { temp: root.clone() };
@@ -229,7 +233,11 @@ mod tests {
 
         assert!(report.items.is_empty());
         assert_eq!(report.total_size, 0);
-        assert!(report.errors.is_empty(), "unexpected errors: {:?}", report.errors);
+        assert!(
+            report.errors.is_empty(),
+            "unexpected errors: {:?}",
+            report.errors
+        );
     }
 
     #[cfg(unix)]
@@ -254,7 +262,10 @@ mod tests {
             .items
             .iter()
             .any(|i| i.path.ends_with("legit.txt") && !i.is_symlink));
-        assert!(report.items.iter().any(|i| i.path.ends_with("escape") && i.is_symlink));
+        assert!(report
+            .items
+            .iter()
+            .any(|i| i.path.ends_with("escape") && i.is_symlink));
         assert!(!report
             .items
             .iter()

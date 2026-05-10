@@ -43,9 +43,12 @@ pub fn append(paths: &dyn PlatformPaths, record: &AuditRecord) -> io::Result<Pat
     })?;
     fs::create_dir_all(&dir)?;
     let log_path = dir.join("audit.log");
-    let mut f = OpenOptions::new().create(true).append(true).open(&log_path)?;
-    let line = serde_json::to_string(record)
-        .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
+    let mut f = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&log_path)?;
+    let line =
+        serde_json::to_string(record).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
     writeln!(f, "{line}")?;
     Ok(log_path)
 }
@@ -84,8 +87,7 @@ mod tests {
 
     #[test]
     fn appends_record_creating_dir() {
-        let dir = std::env::temp_dir()
-            .join(format!("koscleaner-audit-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("koscleaner-audit-{}", std::process::id()));
         let _ = fs::remove_dir_all(&dir);
         let paths = TempPaths { audit: dir.clone() };
 

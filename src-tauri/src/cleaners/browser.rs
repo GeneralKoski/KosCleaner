@@ -102,8 +102,11 @@ mod tests {
     }
 
     fn unique_cache(label: &str) -> PathBuf {
-        let p = std::env::temp_dir()
-            .join(format!("koscleaner-firefox-{}-{}", label, std::process::id()));
+        let p = std::env::temp_dir().join(format!(
+            "koscleaner-firefox-{}-{}",
+            label,
+            std::process::id()
+        ));
         let _ = fs::remove_dir_all(&p);
         fs::create_dir_all(&p).unwrap();
         p
@@ -118,7 +121,10 @@ mod tests {
 
     #[cfg(target_os = "linux")]
     fn make_profile(cache_root: &std::path::Path, profile_id: &str, sub: &str) -> PathBuf {
-        let p = cache_root.join("mozilla/firefox").join(profile_id).join(sub);
+        let p = cache_root
+            .join("mozilla/firefox")
+            .join(profile_id)
+            .join(sub);
         fs::create_dir_all(&p).unwrap();
         p
     }

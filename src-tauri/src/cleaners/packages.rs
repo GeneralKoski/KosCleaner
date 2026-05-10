@@ -166,8 +166,7 @@ mod tests {
     }
 
     fn fresh(label: &str) -> PathBuf {
-        let p = std::env::temp_dir()
-            .join(format!("koscleaner-pkg-{label}-{}", std::process::id()));
+        let p = std::env::temp_dir().join(format!("koscleaner-pkg-{label}-{}", std::process::id()));
         let _ = fs::remove_dir_all(&p);
         fs::create_dir_all(&p).unwrap();
         p
@@ -177,7 +176,10 @@ mod tests {
         if let Some(parent) = p.parent() {
             fs::create_dir_all(parent).unwrap();
         }
-        File::create(p).unwrap().write_all(&vec![0u8; bytes]).unwrap();
+        File::create(p)
+            .unwrap()
+            .write_all(&vec![0u8; bytes])
+            .unwrap();
     }
 
     #[test]

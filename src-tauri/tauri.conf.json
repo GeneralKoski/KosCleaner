@@ -28,12 +28,24 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "category": "Utility",
+    "shortDescription": "Safe, transparent system cleanup.",
+    "longDescription": "KosCleaner is an open-source, local, transparent alternative to CCleaner. No telemetry, no cloud, no third-party data. Every destructive operation is dry-run by default and the user sees exactly which files will be deleted before confirming.",
+    "copyright": "Copyright (C) 2026 Martin Trajkovski",
+    "homepage": "https://github.com/GeneralKoski/KosCleaner",
+    "publisher": "Martin Trajkovski",
+    "licenseFile": "../LICENSE",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "linux": {
+      "deb": {
+        "depends": ["libwebkit2gtk-4.1-0", "libgtk-3-0"]
+      }
+    }
   }
 }
