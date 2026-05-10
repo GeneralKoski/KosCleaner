@@ -68,7 +68,7 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: KosCleaner ${{ github.ref_name }}
           releaseBody: |
-            See CHANGELOG.md for release notes.
+            See [CHANGELOG.md](https://github.com/GeneralKoski/KosCleaner/blob/main/CHANGELOG.md) for release notes.
 
             **Status:** alpha — review the safety policy before running on production data.
           releaseDraft: true
