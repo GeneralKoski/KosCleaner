@@ -20,6 +20,12 @@ package-lock.json.bak
 dist/
 build/
 .vite/
+.output/
+.vercel/
+.netlify/
+.wrangler/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 # Env
 .env
