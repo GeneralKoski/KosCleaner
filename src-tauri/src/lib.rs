@@ -1,3 +1,4 @@
+pub mod platform;
 pub mod safety;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
