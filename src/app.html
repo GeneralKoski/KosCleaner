@@ -1,9 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<script>
+			(function () {
+				try {
+					var saved = localStorage.getItem('koscleaner.theme');
+					var preferDark =
+						saved === 'dark' ||
+						(!saved &&
+							window.matchMedia &&
+							!window.matchMedia('(prefers-color-scheme: light)').matches);
+					document.documentElement.classList.toggle('dark', preferDark);
+				} catch (e) {}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
