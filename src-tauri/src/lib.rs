@@ -18,6 +18,10 @@ fn cleaner_by_id(id: &str) -> Result<Box<dyn Cleaner>, String> {
         "browsers.chrome.cache" => Ok(Box::new(cleaners::chromium::ChromeCacheCleaner)),
         "browsers.chromium.cache" => Ok(Box::new(cleaners::chromium::ChromiumCacheCleaner)),
         "browsers.brave.cache" => Ok(Box::new(cleaners::chromium::BraveCacheCleaner)),
+        "packages.pip.cache" => Ok(Box::new(cleaners::packages::PipCacheCleaner)),
+        "packages.npm.cache" => Ok(Box::new(cleaners::packages::NpmCacheCleaner)),
+        "packages.brew.cache" => Ok(Box::new(cleaners::packages::HomebrewCacheCleaner)),
+        "packages.yay.cache" => Ok(Box::new(cleaners::packages::YayCacheCleaner)),
         other => Err(format!("unknown cleaner: {other}")),
     }
 }
@@ -29,6 +33,10 @@ fn all_cleaners() -> Vec<Box<dyn Cleaner>> {
         Box::new(cleaners::chromium::ChromeCacheCleaner),
         Box::new(cleaners::chromium::ChromiumCacheCleaner),
         Box::new(cleaners::chromium::BraveCacheCleaner),
+        Box::new(cleaners::packages::PipCacheCleaner),
+        Box::new(cleaners::packages::NpmCacheCleaner),
+        Box::new(cleaners::packages::HomebrewCacheCleaner),
+        Box::new(cleaners::packages::YayCacheCleaner),
     ]
 }
 

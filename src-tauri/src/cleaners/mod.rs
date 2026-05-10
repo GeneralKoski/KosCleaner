@@ -8,6 +8,7 @@ use crate::platform::PlatformPaths;
 
 pub mod browser;
 pub mod chromium;
+pub mod packages;
 pub mod system;
 
 pub trait Cleaner {

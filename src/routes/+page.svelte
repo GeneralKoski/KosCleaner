@@ -13,7 +13,7 @@
 	const categories: Category[] = [
 		{ id: 'system', label: 'System', comingSoon: false },
 		{ id: 'browsers', label: 'Browsers', comingSoon: false },
-		{ id: 'packages', label: 'Packages', comingSoon: true },
+		{ id: 'packages', label: 'Packages', comingSoon: false },
 		{ id: 'trash', label: 'Trash', comingSoon: true }
 	];
 
