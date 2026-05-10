@@ -10,6 +10,7 @@ pub mod browser;
 pub mod chromium;
 pub mod packages;
 pub mod system;
+pub mod trash;
 
 pub trait Cleaner {
     fn id(&self) -> &'static str;

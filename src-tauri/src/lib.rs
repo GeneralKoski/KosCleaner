@@ -22,6 +22,7 @@ fn cleaner_by_id(id: &str) -> Result<Box<dyn Cleaner>, String> {
         "packages.npm.cache" => Ok(Box::new(cleaners::packages::NpmCacheCleaner)),
         "packages.brew.cache" => Ok(Box::new(cleaners::packages::HomebrewCacheCleaner)),
         "packages.yay.cache" => Ok(Box::new(cleaners::packages::YayCacheCleaner)),
+        "trash.user" => Ok(Box::new(cleaners::trash::TrashCleaner)),
         other => Err(format!("unknown cleaner: {other}")),
     }
 }
@@ -37,6 +38,7 @@ fn all_cleaners() -> Vec<Box<dyn Cleaner>> {
         Box::new(cleaners::packages::NpmCacheCleaner),
         Box::new(cleaners::packages::HomebrewCacheCleaner),
         Box::new(cleaners::packages::YayCacheCleaner),
+        Box::new(cleaners::trash::TrashCleaner),
     ]
 }
 
