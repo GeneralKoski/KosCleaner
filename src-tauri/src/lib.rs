@@ -1,5 +1,7 @@
+pub mod cleaners;
 pub mod platform;
 pub mod safety;
+pub mod scanner;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
