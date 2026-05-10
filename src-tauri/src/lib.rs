@@ -15,6 +15,9 @@ fn cleaner_by_id(id: &str) -> Result<Box<dyn Cleaner>, String> {
     match id {
         "system.temp" => Ok(Box::new(cleaners::system::SystemTempCleaner)),
         "browsers.firefox.cache" => Ok(Box::new(cleaners::browser::FirefoxCacheCleaner)),
+        "browsers.chrome.cache" => Ok(Box::new(cleaners::chromium::ChromeCacheCleaner)),
+        "browsers.chromium.cache" => Ok(Box::new(cleaners::chromium::ChromiumCacheCleaner)),
+        "browsers.brave.cache" => Ok(Box::new(cleaners::chromium::BraveCacheCleaner)),
         other => Err(format!("unknown cleaner: {other}")),
     }
 }
@@ -23,6 +26,9 @@ fn all_cleaners() -> Vec<Box<dyn Cleaner>> {
     vec![
         Box::new(cleaners::system::SystemTempCleaner),
         Box::new(cleaners::browser::FirefoxCacheCleaner),
+        Box::new(cleaners::chromium::ChromeCacheCleaner),
+        Box::new(cleaners::chromium::ChromiumCacheCleaner),
+        Box::new(cleaners::chromium::BraveCacheCleaner),
     ]
 }
 

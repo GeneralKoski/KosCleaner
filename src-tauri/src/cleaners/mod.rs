@@ -7,6 +7,7 @@ use std::path::PathBuf;
 use crate::platform::PlatformPaths;
 
 pub mod browser;
+pub mod chromium;
 pub mod system;
 
 pub trait Cleaner {
